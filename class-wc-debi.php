@@ -274,7 +274,7 @@ class WC_debi extends WC_Payment_Gateway
 
         //save customer
 
-        $response_customer = (new WP_Http)->request('https://api.debi.pro/v1/customers', [
+        $response_customer = (new debi)->request('https://api.debi.pro/v1/customers', [
             'method' => 'POST',
             'headers' => [
                 "Authorization" => "Bearer $token",
@@ -294,7 +294,7 @@ class WC_debi extends WC_Payment_Gateway
 
         //save payment_method (tokenize)
 
-        $response_payment_method = (new WP_Http)->request('https://api.debi.pro/v1/payment_methods', [
+        $response_payment_method = (new debi)->request('https://api.debi.pro/v1/payment_methods', [
             'method' => 'POST',
             'headers' => [
                 "Authorization" => "Bearer $token",
@@ -312,7 +312,7 @@ class WC_debi extends WC_Payment_Gateway
         $data_payment_method = json_decode($body_payment_method)->data;
         $payment_method_id = $data_payment_method->id;
 
-        $request = (new WP_Http)->request('https://api.debi.pro/v1/subscriptions', [
+        $request = (new debi)->request('https://api.debi.pro/v1/subscriptions', [
             'method' => 'POST',
             'headers' => [
                 "Authorization" => "Bearer $token",

@@ -13,7 +13,7 @@ class debiException extends \Exception {
  * @package default
  * @author
  **/
-class debis {
+class debi {
 	protected $token;
 	protected $sandbox;
 	protected $version;

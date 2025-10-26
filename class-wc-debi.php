@@ -3,9 +3,6 @@ require 'debi.php';
 
 class WC_debi extends WC_Payment_Gateway
 {
-    private $sandbox_mode;
-    private $token_debi_live;
-    private $token_debi_sandbox;
     private $interest_quota_0;
     private $interest_quota_1;
     private $interest_quota_2;
@@ -249,7 +246,9 @@ class WC_debi extends WC_Payment_Gateway
         $email = $woocommerce->customer->get_billing_email();
 
 
-        $token = $this->get_option('token_debi_live');
+        // Determinar qué token usar según el modo sandbox
+        $is_sandbox = $this->sandbox_mode === 'yes';
+        $token = $is_sandbox ? $this->token_debi_sandbox : $this->token_debi_live;
         
         $quotas = $_POST[$this->id . '-cuotas'];
         $nid_property = 'interest_quota_' . $quotas;
@@ -274,7 +273,7 @@ class WC_debi extends WC_Payment_Gateway
 
         //save customer
 
-        $response_customer = (new debi($token))->request('customers', [
+        $response_customer = (new debi($token, $is_sandbox))->request('customers', [
             'method' => 'POST',
             'body' => [
                 'name' => $name,
@@ -289,7 +288,7 @@ class WC_debi extends WC_Payment_Gateway
 
         //save payment_method (tokenize)
 
-        $response_payment_method = (new debi($token))->request('payment_methods', [
+        $response_payment_method = (new debi($token, $is_sandbox))->request('payment_methods', [
             'method' => 'POST',
             'body' => [
                 'type' => 'card',
@@ -302,7 +301,7 @@ class WC_debi extends WC_Payment_Gateway
         $data_payment_method = $response_payment_method['data'];
         $payment_method_id = $data_payment_method['id'];
 
-        $request = (new debi($token))->request('subscriptions', [
+        $request = (new debi($token, $is_sandbox))->request('subscriptions', [
             'method' => 'POST',
             'body' => [
                 'amount' => $final_price / $quotas,

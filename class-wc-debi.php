@@ -254,14 +254,12 @@ class WC_debi extends WC_Payment_Gateway
         $nid_property = 'interest_quota_' . $quotas;
         $interest = $this->{$nid_property};
         $final_price = (float)$order->get_total() + ((float)$order->get_total() * (float)$interest / 100);
-        $marca_tarjeta = $_POST[$this->id . '-marca'];
         $DNIoCUIL = sanitize_text_field($_POST['participant_id']);
         $number = $_POST[$this->id . '-admin-note'];
 
         update_post_meta($order_id, 'Precio Final', sanitize_text_field($final_price));
         update_post_meta($order_id, 'Cantidad de cuotas', sanitize_text_field($quotas));
         update_post_meta($order_id, 'Monto de cuota', sanitize_text_field($final_price / $quotas));
-        update_post_meta($order_id, 'Marca tarjeta', sanitize_text_field($marca_tarjeta));
         update_post_meta($order_id, 'Número', sanitize_text_field($number));
 
         if (date('j') >= 29) {
@@ -509,20 +507,6 @@ class WC_debi extends WC_Payment_Gateway
                             <?php
                         }
                         ?>
-                    </select>
-                </p>
-
-                <p>
-                    <label>Indique marca de tarjeta de crédito o débito<span class="required">*</span></label>
-                    <select id="<?php echo $this->id; ?>-marca" name="<?php echo $this->id; ?>-marca">
-                        <option value="visa-credito">Visa Crédito</option>
-                        <option value="visa-debito">Visa Débito</option>
-                        <option value="mastercard">Mastercard</option>
-                        <option value="nativa">Nativa</option>
-                        <option value="argencard">Argencard</option>
-                        <option value="diners-club">Diners Club</option>
-                        <option value="maestro">Maestro</option>
-                        <option value="mastercard-debit">Mastercard Debit</option>
                     </select>
                 </p>
 

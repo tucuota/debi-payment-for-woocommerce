@@ -276,10 +276,6 @@ class WC_debi extends WC_Payment_Gateway
 
         $response_customer = (new debi($token))->request('https://api.debi.pro/v1/customers', [
             'method' => 'POST',
-            'headers' => [
-                "Authorization" => "Bearer $token",
-                // "Api-Version" => "$version",
-            ],
             'body' => [
                 'name' => $name,
                 'email' => $email,
@@ -287,19 +283,14 @@ class WC_debi extends WC_Payment_Gateway
             ],
         ]);
 
-        $body_customer = wp_remote_retrieve_body($response_customer);
-        $data_customer = json_decode($body_customer)->data;
-        $customer_id = $data_customer->id;
+        $data_customer = $response_customer['data'];
+        $customer_id = $data_customer['id'];
 
 
         //save payment_method (tokenize)
 
         $response_payment_method = (new debi($token))->request('https://api.debi.pro/v1/payment_methods', [
             'method' => 'POST',
-            'headers' => [
-                "Authorization" => "Bearer $token",
-                // "Api-Version" => "$version",
-            ],
             'body' => [
                 'type' => 'card',
                 'card' => [
@@ -308,17 +299,11 @@ class WC_debi extends WC_Payment_Gateway
             ],
         ]);
 
-        $body_payment_method = wp_remote_retrieve_body($response_payment_method);
-        $data_payment_method = json_decode($body_payment_method)->data;
-        $payment_method_id = $data_payment_method->id;
+        $data_payment_method = $response_payment_method['data'];
+        $payment_method_id = $data_payment_method['id'];
 
         $request = (new debi($token))->request('https://api.debi.pro/v1/subscriptions', [
             'method' => 'POST',
-            'headers' => [
-                "Authorization" => "Bearer $token",
-                // "Api-Version" => "$version",
-
-            ],
             'body' => [
                 'amount' => $final_price / $quotas,
                 'description' => 'Orden ' . $order->id . ' - Actividad ' . $product_id . ' - ' . $product_title,
@@ -333,9 +318,8 @@ class WC_debi extends WC_Payment_Gateway
 
 
         //save subscription_id for future updates
-        $body = wp_remote_retrieve_body($request);
-        $data = json_decode($body)->data;
-        $subscription_id = $data->id;
+        $data = $request['data'];
+        $subscription_id = $data['id'];
 
         if (empty($subscription_id)) {
             // $request['response']['code'] > 205
@@ -345,7 +329,7 @@ class WC_debi extends WC_Payment_Gateway
                 // 'result' => 'failure',
                 'redirect' => $this->get_return_url($order),
             );
-        } elseif ($request['response']['code'] <= 205) {
+        } else {
 
             if (!empty($subscription_id)) {
                 update_post_meta($order_id, 'subscription_id', sanitize_text_field($subscription_id));

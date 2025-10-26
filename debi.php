@@ -29,9 +29,8 @@ class debi {
 			'headers' => [
 				"Authorization" => "Bearer $this->token",
 				"Api-Version" => "$this->version",
-				//'Content-Type' => 'application/json',
-				//'Accept' => 'application/json',
-			],
+				'Content-Type' => 'application/json',
+			],	
 			'base_uri' => $this->sandbox ? 'https://debi-test.pro/' : 'https://api.debi.pro/',
 		]);
 	}
@@ -46,32 +45,40 @@ class debi {
 
 		try {
 			$response = $this->client->request($uri, $data);
-			// 	$uri,
-			// 	$data,
-			// 	[
-			// 		'form_params' => $data,
-			// 	]
-			// )
+			
+			// Check if the request was successful
+			if (is_wp_error($response)) {
+				throw new debiException($response->get_error_message(), 0);
+			}
+			
+			// Get response code
+			$response_code = wp_remote_retrieve_response_code($response);
+			
+			// Check if response code indicates success (200-299)
+			if ($response_code < 200 || $response_code >= 300) {
+				$error_message = wp_remote_retrieve_response_message($response);
+				throw new debiException($error_message, $response_code);
+			}
+			
+			// Get response body
+			$response_body = wp_remote_retrieve_body($response);
+			
+			// Decode JSON response
+			$decoded_response = json_decode($response_body, true);
+			
+			// Check if JSON decoding was successful
+			if (json_last_error() !== JSON_ERROR_NONE) {
+				throw new debiException('Invalid JSON response from API', $response_code);
+			}
+			
+			return $decoded_response;
 
-			$response = json_decode($response->getBody(), true);
-
-			// $this->request = $response->getRequest();
-
-			// $this->errors = ;
-
-			// dd($response);
-			return $response;
-
-		} catch (RequestException $e) {
-
-			// $this->response = $response->getStatusCode();
-			$this->status = $e->getResponse()->getStatusCode();
-
-			$this->response = json_decode($e->getResponse()->getBody()->getContents(), true);
-			// return ;
-
-			throw new debiException($e->getMessage(), $this->status);
-
+		} catch (debiException $e) {
+			// Re-throw our custom exceptions
+			throw $e;
+		} catch (Exception $e) {
+			// Handle any other exceptions
+			throw new debiException($e->getMessage(), 0);
 		}
 
 	}

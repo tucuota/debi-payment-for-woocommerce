@@ -331,7 +331,6 @@ class WC_debi extends WC_Payment_Gateway
 
     public function payment_fields()
     {
-        if ($this->hide_text_box !== 'yes') {
             global $woocommerce;
             // $amount = $woocommerce->cart->get_total(); aparece con signo ARS
             // $amount = $woocommerce->cart->cart_contents_total; anda pero rara función
@@ -504,6 +503,5 @@ class WC_debi extends WC_Payment_Gateway
             </fieldset>
 
 <?php
-        }
     }
 }

@@ -34,7 +34,7 @@ class debi {
 	public function request($uri, $data = []) {
 		try {
 			// Construir URL completa
-			$base_url = $this->sandbox ? 'https://debi-test.pro/v1/' : 'https://api.debi.pro/v1/';
+			$base_url = $this->sandbox ? 'https://api.debi-test.pro/v1/' : 'https://api.debi.pro/v1/';
 			$url = $base_url . $uri;
 			
 			// Preparar headers

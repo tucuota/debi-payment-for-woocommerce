@@ -16,7 +16,6 @@ class WC_debi extends WC_Payment_Gateway
     private $interest_quota_10;
     private $interest_quota_11;
     private $interest_quota_12;
-    private $hide_text_box;
 
     public function __construct()
     {
@@ -45,7 +44,6 @@ class WC_debi extends WC_Payment_Gateway
         $this->interest_quota_10 = $this->get_option('interest_quota_10');
         $this->interest_quota_11 = $this->get_option('interest_quota_11');
         $this->interest_quota_12 = $this->get_option('interest_quota_12');
-        $this->hide_text_box = $this->get_option('hide_text_box');
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
     }
@@ -209,13 +207,6 @@ class WC_debi extends WC_Payment_Gateway
                     'min' => '0',
                     'max' => '100',
                 ),
-            ),
-            'hide_text_box' => array(
-                'title' => __('Hide Payment Fields', 'woocommerce-debi'),
-                'type' => 'checkbox',
-                'label' => __('Hide payment fields', 'woocommerce-debi'),
-                'default' => 'no',
-                'description' => __('Check to hide payment fields in checkout', 'woocommerce-debi'),
             ),
 
         );

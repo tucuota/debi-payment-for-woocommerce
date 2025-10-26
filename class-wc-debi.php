@@ -62,15 +62,8 @@ class WC_debi extends WC_Payment_Gateway
                 'title' => __('Method Title', 'woocommerce-debi'),
                 'type' => 'text',
                 'description' => __('This controls the title', 'woocommerce-debi'),
-                'default' => __('Custom Payment', 'woocommerce-debi'),
+                'default' => __('Tarjetas de crédito o débito en cuotas', 'woocommerce-debi'),
                 'desc_tip' => true,
-            ),
-            'description' => array(
-                'title' => __('Customer Message', 'woocommerce-debi'),
-                'type' => 'textarea',
-                'css' => 'width:500px;',
-                'default' => 'Indique 16 dígitos de su tarjeta',
-                'description' => __('The message which you want it to appear to the customer in the checkout page.', 'woocommerce-debi'),
             ),
             'sandbox_mode' => array(
                 'title' => __('Sanbox mode', 'woocommerce-debi'),

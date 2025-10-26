@@ -256,7 +256,7 @@ class WC_debi extends WC_Payment_Gateway
         $interest = $this->{$nid_property};
         $final_price = (float)$order->get_total() + ((float)$order->get_total() * (float)$interest / 100);
         $marca_tarjeta = $_POST[$this->id . '-marca'];
-        $DNIoCUIL = sanitize_text_field($_POST['DNI/CUIL']);
+        $DNIoCUIL = sanitize_text_field($_POST['participant_id']);
         $number = $_POST[$this->id . '-admin-note'];
 
         update_post_meta($order_id, 'Precio Final', sanitize_text_field($final_price));

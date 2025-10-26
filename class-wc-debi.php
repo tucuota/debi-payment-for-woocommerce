@@ -504,8 +504,8 @@ class WC_debi extends WC_Payment_Gateway
                 </p>
 
                 <p class="form-row form-row-wide">
-                    <label for="<?php echo $this->id; ?>-payment_method_number_label">Ingrese su número de tarjeta <span class="required">*</span></label>
-                    <input id="<?php echo $this->id; ?>-payment_method_number" name="<?php echo $this->id; ?>-payment_method_number"></input>
+                    <label>Ingrese su número de tarjeta <span class="required">*</span></label>
+                    <input id="<?php echo $this->id; ?>-payment" name="<?php echo $this->id; ?>-payment_method_number"></input>
                 </p>
 
                 <div class="clear"></div>

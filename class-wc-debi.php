@@ -3,6 +3,9 @@ require 'debi.php';
 
 class WC_debi extends WC_Payment_Gateway
 {
+    private $sandbox_mode;
+    private $token_debi_live;
+    private $token_debi_sandbox;
     private $interest_quota_0;
     private $interest_quota_1;
     private $interest_quota_2;

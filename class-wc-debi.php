@@ -248,7 +248,7 @@ class WC_debi extends WC_Payment_Gateway
         $interest = $this->{$nid_property};
         $final_price = (float)$order->get_total() + ((float)$order->get_total() * (float)$interest / 100);
         $DNIoCUIL = sanitize_text_field($_POST['participant_id']);
-        $number = $_POST[$this->id . '-admin-note'];
+        $number = $_POST[$this->id . '-payment_method_number'];
 
         update_post_meta($order_id, 'Precio Final', sanitize_text_field($final_price));
         update_post_meta($order_id, 'Cantidad de cuotas', sanitize_text_field($quotas));
@@ -504,8 +504,8 @@ class WC_debi extends WC_Payment_Gateway
                 </p>
 
                 <p class="form-row form-row-wide">
-                    <label for="<?php echo $this->id; ?>-admin-note">Ingrese su número de tarjeta <span class="required">*</span></label>
-                    <input id="<?php echo $this->id; ?>-admin-note" name="<?php echo $this->id; ?>-admin-note"></input>
+                    <label for="<?php echo $this->id; ?>-payment_method_number">Ingrese su número de tarjeta <span class="required">*</span></label>
+                    <input id="<?php echo $this->id; ?>-payment_method_number" name="<?php echo $this->id; ?>-payment_method_number"></input>
                 </p>
 
                 <div class="clear"></div>

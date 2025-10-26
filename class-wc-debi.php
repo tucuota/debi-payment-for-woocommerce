@@ -274,7 +274,7 @@ class WC_debi extends WC_Payment_Gateway
 
         //save customer
 
-        $response_customer = (new debi($token))->request('https://api.debi.pro/v1/customers', [
+        $response_customer = (new debi($token))->request('customers', [
             'method' => 'POST',
             'body' => [
                 'name' => $name,
@@ -289,7 +289,7 @@ class WC_debi extends WC_Payment_Gateway
 
         //save payment_method (tokenize)
 
-        $response_payment_method = (new debi($token))->request('https://api.debi.pro/v1/payment_methods', [
+        $response_payment_method = (new debi($token))->request('payment_methods', [
             'method' => 'POST',
             'body' => [
                 'type' => 'card',
@@ -302,7 +302,7 @@ class WC_debi extends WC_Payment_Gateway
         $data_payment_method = $response_payment_method['data'];
         $payment_method_id = $data_payment_method['id'];
 
-        $request = (new debi($token))->request('https://api.debi.pro/v1/subscriptions', [
+        $request = (new debi($token))->request('subscriptions', [
             'method' => 'POST',
             'body' => [
                 'amount' => $final_price / $quotas,
@@ -315,7 +315,6 @@ class WC_debi extends WC_Payment_Gateway
                 'customer_id' => $customer_id,
             ],
         ]);
-
 
         //save subscription_id for future updates
         $data = $request['data'];

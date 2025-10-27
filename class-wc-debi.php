@@ -458,20 +458,6 @@ class WC_debi extends WC_Payment_Gateway
                             </option>
                         <?php }
 
-                        // actividades con plan de pago especial
-                        //OJO PONER ID de las variaciones o si es producto simple, poner el id del producto. Por ej 1609 y 10 es combo elcasco varones 2021, indiv y compartida. 261 es test product
-                        if (in_array($product_id, [261, 1609, 1610, 2125, 2124, 5462, 5496, 3744])) {
-                            $special_interest = 0;
-                            $special_installment = 12;
-                            $final_amount = number_format($amount + $amount * $special_interest / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / $special_installment + $amount * $special_interest / $special_installment / 100, 2, ',', ' ');
-                            ?>
-                            <option value="<?php echo $special_installment; ?>">
-                                <?php echo $special_installment . " cuotas de $ " . $final_quota . " ($ " . $final_amount . "). PLAN COMBO."; ?>
-                            </option>
-                            <?php
-                        }
-
                         // Opciones por defecto si no hay valores de interés configurados
                         $has_any_interest = false;
                         for ($i = 0; $i <= 12; $i++) {
@@ -482,14 +468,11 @@ class WC_debi extends WC_Payment_Gateway
                             }
                         }
 
-                        if (!$has_any_interest) {
-                            // Mostrar opciones básicas sin interés
+                        if (!$has_any_interest) {                    
                             ?>
                             <option value="1">1 cuota de $ <?php echo number_format($amount, 2, ',', ' '); ?> (sin interés)</option>
                             <option value="2">2 cuotas de $ <?php echo number_format($amount / 2, 2, ',', ' '); ?> (sin interés)</option>
                             <option value="3">3 cuotas de $ <?php echo number_format($amount / 3, 2, ',', ' '); ?> (sin interés)</option>
-                            <option value="6">6 cuotas de $ <?php echo number_format($amount / 6, 2, ',', ' '); ?> (sin interés)</option>
-                            <option value="12">12 cuotas de $ <?php echo number_format($amount / 12, 2, ',', ' '); ?> (sin interés)</option>
                             <?php
                         }
                         ?>

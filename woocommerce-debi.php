@@ -52,7 +52,7 @@ if (woocommerce_debi_is_woocommerce_active()) {
 
 	add_action('plugins_loaded', 'woocommerce_debi_load_plugin_textdomain');
 	function woocommerce_debi_load_plugin_textdomain() {
-		load_plugin_textdomain('woocommerce-debi', FALSE, basename(dirname(__FILE__)) . '/languages/');
+		load_plugin_textdomain('woocommerce-debi', false, basename(dirname(__FILE__)) . '/languages/');
 	}
 
 }

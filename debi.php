@@ -128,7 +128,7 @@ class debi {
 		} catch (Exception $e) {
 			// Handle any other exceptions
 			$raw_message = $e->getMessage();
-			$error_message = is_string($raw_message) ? esc_html($raw_message) : '';
+			$error_message = is_string($raw_message) ? sanitize_text_field($raw_message) : '';
 			throw new debiException($error_message, 0);
 		}
 	}

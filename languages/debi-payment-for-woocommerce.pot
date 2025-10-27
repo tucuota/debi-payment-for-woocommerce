@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
 #: class-wc-debi.php:41
-msgid "Debi Payment Gateway"
+msgid "Debi Payment"
 msgstr ""
 
 #: class-wc-debi.php:42

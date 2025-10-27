@@ -21,7 +21,7 @@
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       debi-payment-for-woocommerce
- * Domain Path:       languages
+ * Domain Path:       /languages/
  * Requires at least: 5.6
  * Requires PHP:      7.0
  * WC requires at least: 3.0
@@ -38,6 +38,23 @@ if (!class_exists('debi')) {
 	require_once plugin_dir_path(__FILE__) . 'debi.php';
 }
 
+// Map es_AR to es_ES for translations
+add_filter('plugin_locale', 'debi_map_locale', 10, 2);
+function debi_map_locale($locale, $domain) {
+	if ($domain === 'debi-payment-for-woocommerce' && $locale === 'es_AR') {
+		return 'es_ES';
+	}
+	return $locale;
+}
+
+// Load translations early
+add_action('plugins_loaded', 'debi_load_textdomain', 5);
+function debi_load_textdomain() {
+	$locale = apply_filters('plugin_locale', get_locale(), 'debi-payment-for-woocommerce');
+	$mofile = plugin_dir_path(__FILE__) . 'languages/debi-payment-for-woocommerce-' . $locale . '.mo';
+	load_textdomain('debi-payment-for-woocommerce', $mofile);
+}
+
 if (woocommerce_debi_is_woocommerce_active()) {
 	add_filter('woocommerce_payment_gateways', 'add_woocommerce_debi');
 	function add_woocommerce_debi($gateways) {
@@ -45,7 +62,7 @@ if (woocommerce_debi_is_woocommerce_active()) {
 		return $gateways;
 	}
 
-	add_action('init', 'init_woocommerce_debi', 1);
+	add_action('plugins_loaded', 'init_woocommerce_debi', 10);
 	function init_woocommerce_debi() {
 		require_once plugin_dir_path(__FILE__) . 'class-wc-debi.php';
 	}

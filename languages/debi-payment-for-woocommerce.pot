@@ -1,8 +1,8 @@
-# Copyright (C) 2024 WooCommerce Debi Plugin
-# This file is distributed under the same license as the WooCommerce Debi plugin.
+# Copyright (C) 2024 Debi Payment for WooCommerce
+# This file is distributed under the same license as the Debi Payment for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Debi 1.1.0\n"
+"Project-Id-Version: Debi Payment for WooCommerce 1.1.0\n"
 "Report-Msgid-Bugs-To: https://debi.pro\n"
 "POT-Creation-Date: 2024-01-01 12:00+0000\n"
 "MIME-Version: 1.0\n"
@@ -11,6 +11,7 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: class-wc-debi.php:41
 msgid "Debi Payment"
@@ -72,56 +73,53 @@ msgstr ""
 msgid "% interest for payment in two business days with debit"
 msgstr ""
 
-#: class-wc-debi.php:121
-msgid "% interest for %d installment"
-msgid_plural "% interest for %d installments"
+#: class-wc-debi.php:122
+msgid "% interest for %1$d installment"
+msgid_plural "% interest for %1$d installments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: class-wc-debi.php:281
+#: class-wc-debi.php:142
 msgid "Order not found."
 msgstr ""
 
-#: class-wc-debi.php:303
+#: class-wc-debi.php:167
 msgid "Invalid number of installments selected."
 msgstr ""
 
-#: class-wc-debi.php:317
+#: class-wc-debi.php:182
 msgid "Card number is required."
 msgstr ""
 
-#: class-wc-debi.php:322
+#: class-wc-debi.php:189
 msgid "Invalid card number."
 msgstr ""
 
-#: class-wc-debi.php:470
+#: class-wc-debi.php:286
+msgid "%1$d installment of $ %2$s ($ %3$s)"
+msgstr ""
+
+#: class-wc-debi.php:288
+msgid "%1$d installments of $ %2$s ($ %3$s)"
+msgstr ""
+
+#: class-wc-debi.php:310
+msgid "%1$d installment of $ %2$s (no interest)"
+msgstr ""
+
+#: class-wc-debi.php:312
+msgid "%1$d installments of $ %2$s (no interest)"
+msgstr ""
+
+#: class-wc-debi.php:336
 msgid "Select number of installments"
 msgstr ""
 
-#: class-wc-debi.php:472
-msgid "Select number of installments"
+#: class-wc-debi.php:348
+msgid "DEBIT CARD ONLY"
 msgstr ""
 
-#: class-wc-debi.php:411
-msgid "%d installment of $ %s ($ %s)"
-msgstr ""
-
-#: class-wc-debi.php:412
-msgid "%d installments of $ %s ($ %s)"
-msgstr ""
-
-#: class-wc-debi.php:433
-msgid "%d installment of $ %s (no interest)"
-msgstr ""
-
-#: class-wc-debi.php:434
-msgid "%d installments of $ %s (no interest)"
-msgstr ""
-
-#: class-wc-debi.php:519
+#: class-wc-debi.php:378
 msgid "Enter your card number"
 msgstr ""
 
-#: class-wc-debi.php:441
-msgid "DEBIT CARD ONLY"
-msgstr ""

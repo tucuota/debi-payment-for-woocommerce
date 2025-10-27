@@ -1,17 +1,19 @@
 # Translation file for WooCommerce Debi
-# Copyright (C) 2024 WooCommerce Debi Plugin
-# This file is distributed under the same license as the WooCommerce Debi plugin.
+# Copyright (C) 2024 Debi Payment for WooCommerce
+# This file is distributed under the same license as the Debi Payment for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: debi-payment-for-woocommerce 1.1.0\n"
+"Project-Id-Version: Debi Payment for WooCommerce 1.1.0\n"
 "Report-Msgid-Bugs-To: https://debi.pro\n"
 "POT-Creation-Date: 2024-01-01 12:00+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: class-wc-debi.php:41 class-wc-debi.php:42
+#: class-wc-debi.php:41
+#: class-wc-debi.php:42
 msgid "Debi Payment"
 msgstr "Pago Debi"
 
@@ -67,53 +69,53 @@ msgstr "Genera el token en la sección de desarrollador de debi-test.pro"
 msgid "% interest for payment in two business days with debit"
 msgstr "% de interés para pago en dos días hábiles con débito"
 
-#: class-wc-debi.php:121
-msgid "% interest for %d installment"
-msgid_plural "% interest for %d installments"
-msgstr[0] "% de interés para %d cuota"
-msgstr[1] "% de interés para %d cuotas"
+#: class-wc-debi.php:122
+msgid "% interest for %1$d installment"
+msgid_plural "% interest for %1$d installments"
+msgstr[0] "% de interés para %1$d cuota"
+msgstr[1] "% de interés para %1$d cuotas"
 
-#: class-wc-debi.php:281
+#: class-wc-debi.php:142
 msgid "Order not found."
 msgstr "Orden no encontrada."
 
-#: class-wc-debi.php:303
+#: class-wc-debi.php:167
 msgid "Invalid number of installments selected."
 msgstr "Número de cuotas inválido."
 
-#: class-wc-debi.php:317
+#: class-wc-debi.php:182
 msgid "Card number is required."
 msgstr "El número de tarjeta es requerido."
 
-#: class-wc-debi.php:322
+#: class-wc-debi.php:189
 msgid "Invalid card number."
 msgstr "Número de tarjeta inválido."
 
-#: class-wc-debi.php:336 class-wc-debi.php:338
+#: class-wc-debi.php:286
+msgid "%1$d installment of $ %2$s ($ %3$s)"
+msgstr "%1$d cuota de $ %2$s ($ %3$s)"
+
+#: class-wc-debi.php:288
+msgid "%1$d installments of $ %2$s ($ %3$s)"
+msgstr "%1$d cuotas de $ %2$s ($ %3$s)"
+
+#: class-wc-debi.php:310
+msgid "%1$d installment of $ %2$s (no interest)"
+msgstr "%1$d cuota de $ %2$s (sin interés)"
+
+#: class-wc-debi.php:312
+msgid "%1$d installments of $ %2$s (no interest)"
+msgstr "%1$d cuotas de $ %2$s (sin interés)"
+
+#: class-wc-debi.php:336
 msgid "Select number of installments"
 msgstr "Seleccione la cantidad de cuotas"
 
-#: class-wc-debi.php:411
-msgid "%d installment of $ %s ($ %s)"
-msgstr "%d cuota de $ %s ($ %s)"
-
-#: class-wc-debi.php:412
-msgid "%d installments of $ %s ($ %s)"
-msgstr "%d cuotas de $ %s ($ %s)"
-
-#: class-wc-debi.php:433
-msgid "%d installment of $ %s (no interest)"
-msgstr "%d cuota de $ %s (sin interés)"
-
-#: class-wc-debi.php:434
-msgid "%d installments of $ %s (no interest)"
-msgstr "%d cuotas de $ %s (sin interés)"
-
-#: class-wc-debi.php:519
-msgid "Enter your card number"
-msgstr "Ingrese su número de tarjeta"
-
-#: class-wc-debi.php:441
+#: class-wc-debi.php:348
 msgid "DEBIT CARD ONLY"
 msgstr "SOLO CON TARJETA DE DÉBITO"
+
+#: class-wc-debi.php:378
+msgid "Enter your card number"
+msgstr "Ingrese su número de tarjeta"
 

@@ -1,24 +1,68 @@
 <?php
+/**
+ * The API client class for Debi payment gateway.
+ *
+ * @package    WooCommerce_Debi
+ * @author     Fernando del Peral <support@debi.pro>
+ */
 
-// use GuzzleHttp\Client;
-// use GuzzleHttp\Exception\RequestException;
+// If this file is called directly, abort.
+if (!defined('WPINC')) {
+	die;
+}
 
+/**
+ * Custom exception class for Debi API errors
+ *
+ * @package    WooCommerce_Debi
+ */
 class debiException extends \Exception {
 
 }
 
 /**
- * debi
+ * Debi API Client Class
  *
- * @package default
- * @author
- **/
+ * Handles API communication with the Debi payment gateway.
+ *
+ * @package    WooCommerce_Debi
+ */
 class debi {
+	/**
+	 * API token for authentication
+	 *
+	 * @var string
+	 */
 	protected $token;
+	
+	/**
+	 * Whether to use sandbox environment
+	 *
+	 * @var bool
+	 */
 	protected $sandbox;
+	
+	/**
+	 * API version
+	 *
+	 * @var string
+	 */
 	protected $version;
+	
+	/**
+	 * HTTP client (not currently used, using wp_remote_request instead)
+	 *
+	 * @var mixed
+	 */
 	protected $client;
 
+	/**
+	 * Constructor
+	 *
+	 * @param string $token   API token
+	 * @param bool   $sandbox Whether to use sandbox
+	 * @param string $version API version
+	 */
 	public function __construct($token, $sandbox = true, $version = 'v1') {
 		$this->token = $token;
 		$this->sandbox = $sandbox;
@@ -26,10 +70,12 @@ class debi {
 	}
 
 	/**
-	 * request
+	 * Make a request to the Debi API
 	 *
-	 * @return array
-	 * @author
+	 * @param string $uri  API endpoint
+	 * @param array  $data Request data including method and body
+	 * @return array Decoded JSON response
+	 * @throws debiException If the request fails
 	 **/
 	public function request($uri, $data = []) {
 		try {

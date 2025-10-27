@@ -1,6 +1,21 @@
 <?php
-require 'debi.php';
+/**
+ * The core plugin class for Debi payment gateway.
+ *
+ * @package    WooCommerce_Debi
+ * @author     Fernando del Peral <support@debi.pro>
+ */
 
+// If this file is called directly, abort.
+if (!defined('WPINC')) {
+	die;
+}
+
+/**
+ * WC_debi Payment Gateway
+ *
+ * @package    WooCommerce_Debi
+ */
 class WC_debi extends WC_Payment_Gateway
 {
     private $sandbox_mode;
@@ -217,10 +232,13 @@ class WC_debi extends WC_Payment_Gateway
 
     public function process_payment($order_id)
     {
-
         global $woocommerce;
-        $order = new WC_Order($order_id);
+        $order = wc_get_order($order_id);
 
+        if (!$order) {
+            wc_add_notice(__('Order not found.', 'woocommerce-debi'), 'error');
+            return false;
+        }
 
         $items = $woocommerce->cart->get_cart();
 
@@ -232,17 +250,39 @@ class WC_debi extends WC_Payment_Gateway
         $name = $woocommerce->customer->get_billing_last_name() . ', ' . $woocommerce->customer->get_billing_first_name();
         $email = $woocommerce->customer->get_billing_email();
 
-
         // Determinar qué token usar según el modo sandbox
         $is_sandbox = $this->sandbox_mode === 'yes';
         $token = $is_sandbox ? $this->token_debi_sandbox : $this->token_debi_live;
         
-        $quotas = $_POST[$this->id . '-cuotas'];
+        // Sanitize and validate input
+        $quotas = isset($_POST[$this->id . '-cuotas']) ? absint($_POST[$this->id . '-cuotas']) : 0;
+        
+        if ($quotas < 0 || $quotas > 12) {
+            wc_add_notice(__('Invalid number of installments selected.', 'woocommerce-debi'), 'error');
+            return false;
+        }
+        
         $nid_property = 'interest_quota_' . $quotas;
         $interest = $this->{$nid_property};
+        $interest = is_numeric($interest) ? floatval($interest) : 0;
+        
         $final_price = (float)$order->get_total() + ((float)$order->get_total() * (float)$interest / 100);
-        $DNIoCUIL = sanitize_text_field($_POST['participant_id']);
-        $number = $_POST[$this->id . '-payment_method_number'];
+        
+        $DNIoCUIL = isset($_POST['participant_id']) ? sanitize_text_field($_POST['participant_id']) : '';
+        $number = isset($_POST[$this->id . '-payment_method_number']) ? sanitize_text_field($_POST[$this->id . '-payment_method_number']) : '';
+        
+        // Validate card number
+        if (empty($number)) {
+            wc_add_notice(__('Card number is required.', 'woocommerce-debi'), 'error');
+            return false;
+        }
+        
+        // Basic card number validation (should be numeric and have reasonable length)
+        $number = preg_replace('/\D/', '', $number);
+        if (empty($number) || strlen($number) < 13 || strlen($number) > 19) {
+            wc_add_notice(__('Invalid card number.', 'woocommerce-debi'), 'error');
+            return false;
+        }
 
         update_post_meta($order_id, 'Precio Final', sanitize_text_field($final_price));
         update_post_meta($order_id, 'Cantidad de cuotas', sanitize_text_field($quotas));
@@ -348,18 +388,18 @@ class WC_debi extends WC_Payment_Gateway
 ?>
 
             <fieldset>
-
+                <?php echo $this->get_description(); ?>
+                
                 <p>
-                    <label>Ingrese la cantidad de cuotas<span class="required">*</span></label>
-                    <select id="<?php echo $this->id; ?>-cuotas" name="<?php echo $this->id; ?>-cuotas">
-                        <option value="" disabled selected>Seleccione la cantidad de cuotas</option>
+                    <label for="<?php echo esc_attr($this->id); ?>-cuotas"><?php _e('Select number of installments', 'woocommerce-debi'); ?><span class="required">*</span></label>
+                    <select id="<?php echo esc_attr($this->id); ?>-cuotas" name="<?php echo esc_attr($this->id); ?>-cuotas">
+                        <option value="" disabled selected><?php _e('Select number of installments', 'woocommerce-debi'); ?></option>
                         <?php
                         if ($this->interest_quota_0 != "") {
                             $final_amount = number_format($amount + $amount * $this->interest_quota_0 / 100, 2, ',', ' ');
                             $final_quota = number_format($amount / 1 + $amount * $this->interest_quota_0 / 1 / 100, 2, ',', ' ')
                         ?>
-                            <option value=0><?php echo ("1 cuota de $ " . $final_quota . " ($ " . $final_amount) . ") SOLO CON TARJETA DE DÉBITO"; ?>
-                            </option>
+                            <option value="0"><?php echo esc_html("1 cuota de $ " . $final_quota . " ($ " . $final_amount . ") SOLO CON TARJETA DE DÉBITO"); ?></option>
                         <?php }
 
                         if ($this->interest_quota_1 != "") {

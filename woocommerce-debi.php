@@ -1,18 +1,42 @@
 <?php
-/* @wordpress-plugin
+/**
+ * The plugin bootstrap file
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              https://debi.pro
+ * @since             1.0.0
+ * @package           WooCommerce_Debi
+ *
+ * @wordpress-plugin
  * Plugin Name:       WooCommerce Debi
- * Plugin URI:        https://wpruby.com/plugin/woocommerce-custom-payment-gateway-pro/
- * Description:       Add gateway debi to Woocommerce to receive payments.
+ * Plugin URI:        https://github.com/yourusername/woocommerce-debi
+ * Description:       Official Debi payment gateway integration for WooCommerce. Accept credit cards with installments and automatic debit payments.
  * Version:           1.1.0
- * WC requires at least: 2.6
- * WC tested up to: 3.5
  * Author:            Fernando del Peral
  * Author URI:        https://debi.pro
- * Text Domain:       woocommerce-debi
- * Domain Path: /languages
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       woocommerce-debi
+ * Domain Path:       /languages
+ * Requires at least: 5.6
+ * Requires PHP:      7.0
+ * WC requires at least: 3.0
+ * WC tested up to:   8.0
  */
+
+// If this file is called directly, abort.
+if (!defined('WPINC')) {
+	die;
+}
+
+// Load API client class
+if (!class_exists('debi')) {
+	require_once plugin_dir_path(__FILE__) . 'debi.php';
+}
 
 $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 if (woocommerce_debi_is_woocommerce_active()) {
@@ -24,7 +48,7 @@ if (woocommerce_debi_is_woocommerce_active()) {
 
 	add_action('plugins_loaded', 'init_woocommerce_debi');
 	function init_woocommerce_debi() {
-		require 'class-wc-debi.php';
+		require_once plugin_dir_path(__FILE__) . 'class-wc-debi.php';
 	}
 
 	add_action('plugins_loaded', 'woocommerce_debi_load_plugin_textdomain');

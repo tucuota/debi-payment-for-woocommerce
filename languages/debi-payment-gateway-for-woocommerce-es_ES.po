@@ -93,7 +93,7 @@ msgstr "El número de tarjeta es requerido."
 msgid "Invalid card number."
 msgstr "Número de tarjeta inválido."
 
-#: class-wc-debi.php:470 class-wc-debi.php:472
+#: class-wc-debi.php:336 class-wc-debi.php:338
 msgid "Select number of installments"
 msgstr "Seleccione la cantidad de cuotas"
 

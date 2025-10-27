@@ -56,7 +56,7 @@ if (woocommerce_debi_is_woocommerce_active()) {
 
 	add_action('plugins_loaded', 'init_woocommerce_debi', 10);
 	function init_woocommerce_debi() {
-		load_textdomain('debi-payment-for-woocommerce', plugin_dir_path(__FILE__) . 'languages');
+		load_plugin_textdomain('debi-payment-for-woocommerce', false, dirname(plugin_basename(__FILE__)) . '/languages');
 		require_once plugin_dir_path(__FILE__) . 'class-wc-debi.php';
 	}
 

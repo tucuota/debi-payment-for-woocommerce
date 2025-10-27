@@ -50,9 +50,9 @@ if (woocommerce_debi_is_woocommerce_active()) {
 		require_once plugin_dir_path(__FILE__) . 'class-wc-debi.php';
 	}
 
-	add_action('plugins_loaded', 'woocommerce_debi_load_plugin_textdomain');
+	add_action('plugins_loaded', 'woocommerce_debi_load_plugin_textdomain', 0);
 	function woocommerce_debi_load_plugin_textdomain() {
-		load_plugin_textdomain('woocommerce-debi', false, basename(dirname(__FILE__)) . '/languages/');
+		load_plugin_textdomain('woocommerce-debi', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 	}
 
 }

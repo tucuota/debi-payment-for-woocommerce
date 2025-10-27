@@ -45,7 +45,16 @@ if (woocommerce_debi_is_woocommerce_active()) {
 		return $gateways;
 	}
 
-	add_action('plugins_loaded', 'init_woocommerce_debi');
+	// Map es_AR to es_ES for translations
+	add_filter('plugin_locale', 'debi_map_locale', 10, 2);
+	function debi_map_locale($locale, $domain) {
+		if ($domain === 'debi-payment-gateway-for-woocommerce' && $locale === 'es_AR') {
+			return 'es_ES';
+		}
+		return $locale;
+	}
+
+	add_action('init', 'init_woocommerce_debi', 5);
 	function init_woocommerce_debi() {
 		load_plugin_textdomain('debi-payment-gateway-for-woocommerce', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 		require_once plugin_dir_path(__FILE__) . 'class-wc-debi.php';

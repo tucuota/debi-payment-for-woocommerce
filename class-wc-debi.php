@@ -38,8 +38,8 @@ class WC_debi extends WC_Payment_Gateway
     public function __construct()
     {
         $this->id = 'woo-debi';
-        $this->method_title = __('Debi', 'woocommerce-debi');
-        $this->title = __('Debi Payment', 'woocommerce-debi');
+        $this->method_title = __('Debi', 'debi-payment-for-woocommerce');
+        $this->title = __('Debi Payment', 'debi-payment-for-woocommerce');
         $this->has_fields = true;
         $this->init_form_fields();
         $this->init_settings();
@@ -69,44 +69,44 @@ class WC_debi extends WC_Payment_Gateway
     {
         $this->form_fields = array(
             'enabled' => array(
-                'title' => __('Enable/Disable', 'woocommerce-debi'),
+                'title' => __('Enable/Disable', 'debi-payment-for-woocommerce'),
                 'type' => 'checkbox',
-                'label' => __('Enable Custom Payment', 'woocommerce-debi'),
+                'label' => __('Enable Custom Payment', 'debi-payment-for-woocommerce'),
                 'default' => 'no',
             ),
             'title' => array(
-                'title' => __('Method Title', 'woocommerce-debi'),
+                'title' => __('Method Title', 'debi-payment-for-woocommerce'),
                 'type' => 'text',
-                'description' => __('This controls the title', 'woocommerce-debi'),
-                'default' => __('Credit or debit card in installments', 'woocommerce-debi'),
+                'description' => __('This controls the title', 'debi-payment-for-woocommerce'),
+                'default' => __('Credit or debit card in installments', 'debi-payment-for-woocommerce'),
                 'desc_tip' => true,
             ),
             'sandbox_mode' => array(
-                'title' => __('Sanbox mode', 'woocommerce-debi'),
+                'title' => __('Sanbox mode', 'debi-payment-for-woocommerce'),
                 'type' => 'checkbox',
-                'label' => __('Sandbox', 'woocommerce-debi'),
+                'label' => __('Sandbox', 'debi-payment-for-woocommerce'),
                 'default' => 'no',
-                'description' => __('Check if you want to use sandbox mode for testing', 'woocommerce-debi'),
+                'description' => __('Check if you want to use sandbox mode for testing', 'debi-payment-for-woocommerce'),
             ),
             'token_debi_live' => array(
-                'title' => __('Token Debi Live', 'woocommerce-debi'),
+                'title' => __('Token Debi Live', 'debi-payment-for-woocommerce'),
                 'type' => 'textarea',
                 'css' => 'width:500px;',
                 'default' => '',
-                'description' => __('Generate token in developer section of debi', 'woocommerce-debi'),
+                'description' => __('Generate token in developer section of debi', 'debi-payment-for-woocommerce'),
 
             ),
             'token_debi_sandbox' => array(
-                'title' => __('Token Debi Sandbox', 'woocommerce-debi'),
+                'title' => __('Token Debi Sandbox', 'debi-payment-for-woocommerce'),
                 'type' => 'textarea',
                 'css' => 'width:500px;',
                 'default' => '',
-                'description' => __('Generate token in developer section of debi-test.pro', 'woocommerce-debi'),
+                'description' => __('Generate token in developer section of debi-test.pro', 'debi-payment-for-woocommerce'),
 
             ),
 
             'interest_quota_0' => array(
-                'title' => __('% interest for payment in two business days with debit', 'woocommerce-debi'),
+                'title' => __('% interest for payment in two business days with debit', 'debi-payment-for-woocommerce'),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -120,7 +120,8 @@ class WC_debi extends WC_Payment_Gateway
         // Generate interest quota fields dynamically (1-12)
         for ($i = 1; $i <= 12; $i++) {
             $this->form_fields['interest_quota_' . $i] = array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', $i, 'woocommerce-debi'), $i),
+                // translators: %d is the installment count
+                'title' => sprintf(_n('%% interest for %1$d installment', '%% interest for %1$d installments', $i, 'debi-payment-for-woocommerce'), $i),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -138,7 +139,7 @@ class WC_debi extends WC_Payment_Gateway
         $order = wc_get_order($order_id);
 
         if (!$order) {
-            wc_add_notice(__('Order not found.', 'woocommerce-debi'), 'error');
+            wc_add_notice(__('Order not found.', 'debi-payment-for-woocommerce'), 'error');
             return false;
         }
 
@@ -157,10 +158,10 @@ class WC_debi extends WC_Payment_Gateway
         $token = $is_sandbox ? $this->token_debi_sandbox : $this->token_debi_live;
         
         // Sanitize and validate input
-        $quotas = isset($_POST[$this->id . '-cuotas']) ? absint($_POST[$this->id . '-cuotas']) : 0;
+        $quotas = isset($_POST[$this->id . '-cuotas']) ? absint(wp_unslash($_POST[$this->id . '-cuotas'])) : 0;
         
         if ($quotas < 0 || $quotas > 12) {
-            wc_add_notice(__('Invalid number of installments selected.', 'woocommerce-debi'), 'error');
+            wc_add_notice(__('Invalid number of installments selected.', 'debi-payment-for-woocommerce'), 'error');
             return false;
         }
         
@@ -170,19 +171,19 @@ class WC_debi extends WC_Payment_Gateway
         
         $final_price = (float)$order->get_total() + ((float)$order->get_total() * (float)$interest / 100);
         
-        $DNIoCUIL = isset($_POST['participant_id']) ? sanitize_text_field($_POST['participant_id']) : '';
-        $number = isset($_POST[$this->id . '-payment_method_number']) ? sanitize_text_field($_POST[$this->id . '-payment_method_number']) : '';
+        $DNIoCUIL = isset($_POST['participant_id']) ? sanitize_text_field(wp_unslash($_POST['participant_id'])) : '';
+        $number = isset($_POST[$this->id . '-payment_method_number']) ? sanitize_text_field(wp_unslash($_POST[$this->id . '-payment_method_number'])) : '';
         
         // Validate card number
         if (empty($number)) {
-            wc_add_notice(__('Card number is required.', 'woocommerce-debi'), 'error');
+            wc_add_notice(__('Card number is required.', 'debi-payment-for-woocommerce'), 'error');
             return false;
         }
         
         // Basic card number validation (should be numeric and have reasonable length)
         $number = preg_replace('/\D/', '', $number);
         if (empty($number) || strlen($number) < 13 || strlen($number) > 19) {
-            wc_add_notice(__('Invalid card number.', 'woocommerce-debi'), 'error');
+            wc_add_notice(__('Invalid card number.', 'debi-payment-for-woocommerce'), 'error');
             return false;
         }
 
@@ -191,10 +192,10 @@ class WC_debi extends WC_Payment_Gateway
         update_post_meta($order_id, '_debi_installment_amount', sanitize_text_field($final_price / $quotas));
         update_post_meta($order_id, '_debi_card_last_four', sanitize_text_field(substr($number, -4)));
 
-        if (date('j') >= 29) {
+        if (gmdate('j') >= 29) {
             $day_of_month = 1;
         } else {
-            $day_of_month = date('j');
+            $day_of_month = gmdate('j');
         }
 
 
@@ -278,8 +279,10 @@ class WC_debi extends WC_Payment_Gateway
      * @return string Formatted installment text
      */
     private function get_installment_text($count, $quota_amount, $final_amount, $extra_text = '') {
-        $singular_text = __('%d installment of $ %s ($ %s)', 'woocommerce-debi');
-        $plural_text = __('%d installments of $ %s ($ %s)', 'woocommerce-debi');
+        // translators: %1$d is the installment count, %2$s is the installment amount, %3$s is the total amount
+        $singular_text = __('%1$d installment of $ %2$s ($ %3$s)', 'debi-payment-for-woocommerce');
+        // translators: %1$d is the installment count, %2$s is the installment amount, %3$s is the total amount
+        $plural_text = __('%1$d installments of $ %2$s ($ %3$s)', 'debi-payment-for-woocommerce');
         
         $text = ($count == 1) ? $singular_text : $plural_text;
         
@@ -300,8 +303,10 @@ class WC_debi extends WC_Payment_Gateway
      * @return string Formatted installment text
      */
     private function get_installment_no_interest_text($count, $quota_amount) {
-        $singular_text = __('%d installment of $ %s (no interest)', 'woocommerce-debi');
-        $plural_text = __('%d installments of $ %s (no interest)', 'woocommerce-debi');
+        // translators: %1$d is the installment count, %2$s is the installment amount
+        $singular_text = __('%1$d installment of $ %2$s (no interest)', 'debi-payment-for-woocommerce');
+        // translators: %1$d is the installment count, %2$s is the installment amount
+        $plural_text = __('%1$d installments of $ %2$s (no interest)', 'debi-payment-for-woocommerce');
         
         $text = ($count == 1) ? $singular_text : $plural_text;
         
@@ -322,12 +327,12 @@ class WC_debi extends WC_Payment_Gateway
 ?>
 
             <fieldset>
-                <?php echo $this->get_description(); ?>
+                <?php echo wp_kses_post($this->get_description()); ?>
                 
                 <p>
-                    <label for="<?php echo esc_attr($this->id); ?>-cuotas"><?php _e('Select number of installments', 'woocommerce-debi'); ?><span class="required">*</span></label>
+                    <label for="<?php echo esc_attr($this->id); ?>-cuotas"><?php esc_html_e('Select number of installments', 'debi-payment-for-woocommerce'); ?><span class="required">*</span></label>
                     <select id="<?php echo esc_attr($this->id); ?>-cuotas" name="<?php echo esc_attr($this->id); ?>-cuotas">
-                        <option value="" disabled selected><?php _e('Select number of installments', 'woocommerce-debi'); ?></option>
+                        <option value="" disabled selected><?php esc_html_e('Select number of installments', 'debi-payment-for-woocommerce'); ?></option>
                         <?php
                         // Render installment options
                         for ($i = 0; $i <= 12; $i++) {
@@ -336,7 +341,7 @@ class WC_debi extends WC_Payment_Gateway
                                 $final_amount = number_format($amount + $amount * $this->{$property} / 100, 2, ',', ' ');
                                 $final_quota = number_format($amount / ($i == 0 ? 1 : $i) + $amount * $this->{$property} / ($i == 0 ? 1 : $i) / 100, 2, ',', ' ');
                                 
-                                $extra_text = ($i == 0) ? ' ' . __('DEBIT CARD ONLY', 'woocommerce-debi') : '';
+                                $extra_text = ($i == 0) ? ' ' . __('DEBIT CARD ONLY', 'debi-payment-for-woocommerce') : '';
                                 $text = $this->get_installment_text($i == 0 ? 1 : $i, $final_quota, $final_amount, $extra_text);
                                 ?>
                                 <option value="<?php echo esc_attr($i); ?>"><?php echo esc_html($text); ?></option>
@@ -366,7 +371,7 @@ class WC_debi extends WC_Payment_Gateway
                 </p>
 
                 <p class="form-row form-row-wide">
-                    <label for="<?php echo esc_attr($this->id); ?>-payment"><?php _e('Enter your card number', 'woocommerce-debi'); ?> <span class="required">*</span></label>
+                    <label for="<?php echo esc_attr($this->id); ?>-payment"><?php esc_html_e('Enter your card number', 'debi-payment-for-woocommerce'); ?> <span class="required">*</span></label>
                     <input id="<?php echo esc_attr($this->id); ?>-payment" name="<?php echo esc_attr($this->id); ?>-payment_method_number"></input>
                 </p>
 

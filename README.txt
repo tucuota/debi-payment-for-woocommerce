@@ -2,7 +2,7 @@
 Contributors: fernandodelperal
 Tags: payment, gateway, debit, installments, subscriptions
 Requires at least: 5.6
-Tested up to: 6.4
+Tested up to: 6.8
 Stable tag: 1.1.0
 Requires PHP: 7.0
 License: GPLv2 or later

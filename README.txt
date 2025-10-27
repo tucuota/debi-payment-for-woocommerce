@@ -1,4 +1,4 @@
-=== Debi Payment for WooCommerce ===
+=== Debi Payment Gateway for WooCommerce ===
 Contributors: fernandodelperal
 Tags: payment, gateway, debit, installments, subscriptions
 Requires at least: 5.6
@@ -12,7 +12,7 @@ Official Debi payment gateway integration for WooCommerce. Accept payments with 
 
 == Description ==
 
-Debi Payment for WooCommerce is the official payment gateway integration for Debi.pro, allowing your WooCommerce store to accept credit and debit card payments with flexible installment plans.
+Debi Payment Gateway for WooCommerce is the official payment gateway integration for Debi.pro, allowing your WooCommerce store to accept credit and debit card payments with flexible installment plans.
 
 = Key Features =
 

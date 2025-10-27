@@ -38,7 +38,7 @@ class WC_debi extends WC_Payment_Gateway
     public function __construct()
     {
         $this->id = 'woo-debi';
-        $this->method_title = __('Debi Payment Gateway', 'woocommerce-debi');
+        $this->method_title = __('Debi', 'woocommerce-debi');
         $this->title = __('Debi Payment', 'woocommerce-debi');
         $this->has_fields = true;
         $this->init_form_fields();
@@ -114,120 +114,22 @@ class WC_debi extends WC_Payment_Gateway
                     'min' => '0',
                     'max' => '100',
                 ),
-
             ),
-
-            'interest_quota_1' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 1, 'woocommerce-debi'), 1),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_2' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 2, 'woocommerce-debi'), 2),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_3' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 3, 'woocommerce-debi'), 3),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_4' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 4, 'woocommerce-debi'), 4),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_5' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 5, 'woocommerce-debi'), 5),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_6' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 6, 'woocommerce-debi'), 6),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_7' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 7, 'woocommerce-debi'), 7),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_8' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 8, 'woocommerce-debi'), 8),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_9' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 9, 'woocommerce-debi'), 9),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_10' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 10, 'woocommerce-debi'), 10),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_11' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 11, 'woocommerce-debi'), 11),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ), 'interest_quota_12' => array(
-                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 12, 'woocommerce-debi'), 12),
-                'type' => 'number',
-                'default' => '',
-                'custom_attributes' => array(
-                    'step' => 'any',
-                    'min' => '0',
-                    'max' => '100',
-                ),
-            ),
-
         );
+        
+        // Generate interest quota fields dynamically (1-12)
+        for ($i = 1; $i <= 12; $i++) {
+            $this->form_fields['interest_quota_' . $i] = array(
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', $i, 'woocommerce-debi'), $i),
+                'type' => 'number',
+                'default' => '',
+                'custom_attributes' => array(
+                    'step' => 'any',
+                    'min' => '0',
+                    'max' => '100',
+                ),
+            );
+        }
     }
 
     public function process_payment($order_id)
@@ -343,11 +245,8 @@ class WC_debi extends WC_Payment_Gateway
         $subscription_id = $data['id'];
 
         if (empty($subscription_id)) {
-            // $request['response']['code'] > 205
-            // echo $request['response']['message'];
             return array(
                 'result' => 'failure',
-                // 'result' => 'failure',
                 'redirect' => $this->get_return_url($order),
             );
         } else {
@@ -361,10 +260,9 @@ class WC_debi extends WC_Payment_Gateway
 
             // Remove cart
             $woocommerce->cart->empty_cart();
-            // Return thankyou redirect
+            
             return array(
                 'result' => 'success',
-                // 'result' => 'failure',
                 'redirect' => $this->get_return_url($order),
             );
         }

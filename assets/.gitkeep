@@ -1,9 +1,9 @@
-# Assets directory
-# 
-# WordPress.org requires:
-# - assets/banner-772x250.jpg (plugin banner)
-# - assets/icon-128x128.jpg or .png (plugin icon)
-# - assets/icon-256x256.jpg or .png (plugin icon)
+# Assets directory for plugin icons and banners
 #
-# Screenshots should be placed in a 'screenshots' folder
+# Optional files for WordPress.org (recommended but not required):
+# - icon-256x256.png (256x256 pixels - shown in plugin directory)
+# - banner-772x250.png (772x250 pixels - shown on plugin page)
+# - screenshots/screenshot-1.png (880x660 pixels - shown in plugin screenshots)
+#
+# You can add these files later if needed.
 

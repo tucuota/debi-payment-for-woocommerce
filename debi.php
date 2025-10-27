@@ -48,13 +48,6 @@ class debi {
 	 * @var string
 	 */
 	protected $version;
-	
-	/**
-	 * HTTP client (not currently used, using wp_remote_request instead)
-	 *
-	 * @var mixed
-	 */
-	protected $client;
 
 	/**
 	 * Constructor
@@ -98,7 +91,7 @@ class debi {
 				'timeout' => 30,
 			];
 			
-			// Hacer el request
+			// Make the request
 			$response = wp_remote_request($url, $args);
 			
 			// Check if the request was successful

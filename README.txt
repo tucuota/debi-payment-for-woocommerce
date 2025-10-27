@@ -1,6 +1,6 @@
-=== WooCommerce Debi ===
-Contributors: fperal
-Tags: woocommerce, payment, gateway, debi, installments, automatic-debit
+=== Debi Payment for WooCommerce ===
+Contributors: fernandodelperal
+Tags: payment, gateway, debit, installments, subscriptions
 Requires at least: 5.6
 Tested up to: 6.4
 Stable tag: 1.1.0
@@ -12,7 +12,7 @@ Official Debi payment gateway integration for WooCommerce. Accept payments with 
 
 == Description ==
 
-WooCommerce Debi is the official payment gateway integration for Debi.pro, allowing your WooCommerce store to accept credit and debit card payments with flexible installment plans.
+Debi Payment for WooCommerce is the official payment gateway integration for Debi.pro, allowing your WooCommerce store to accept credit and debit card payments with flexible installment plans.
 
 = Key Features =
 
@@ -44,7 +44,7 @@ WooCommerce Debi is the official payment gateway integration for Debi.pro, allow
 
 1. Log in to your WordPress admin panel
 2. Navigate to Plugins → Add New
-3. Search for "WooCommerce Debi"
+3. Search for "Debi Payment for WooCommerce"
 4. Click "Install Now"
 5. Activate the plugin
 6. Configure the plugin at WooCommerce → Settings → Payments → Debi
@@ -55,13 +55,13 @@ WooCommerce Debi is the official payment gateway integration for Debi.pro, allow
 2. Extract it to your WordPress plugins directory (wp-content/plugins/)
 3. Log in to your WordPress admin panel
 4. Navigate to Plugins
-5. Find "WooCommerce Debi" and click "Activate"
+5. Find "Debi Payment for WooCommerce" and click "Activate"
 6. Configure the plugin at WooCommerce → Settings → Payments → Debi
 
 = Configuration =
 
 1. Go to WooCommerce → Settings → Payments
-2. Find "Debi Payment Gateway" and click "Manage"
+2. Find "Debi" and click "Manage"
 3. Enable the payment method
 4. Enter your Debi API credentials:
    * Live Token

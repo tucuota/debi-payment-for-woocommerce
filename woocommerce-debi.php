@@ -12,7 +12,7 @@
  * @package           WooCommerce_Debi
  *
  * @wordpress-plugin
- * Plugin Name:       WooCommerce Debi
+ * Plugin Name:       Debi Payment for WooCommerce
  * Plugin URI:        https://github.com/yourusername/woocommerce-debi
  * Description:       Official Debi payment gateway integration for WooCommerce. Accept credit cards with installments and automatic debit payments.
  * Version:           1.1.0
@@ -38,7 +38,6 @@ if (!class_exists('debi')) {
 	require_once plugin_dir_path(__FILE__) . 'debi.php';
 }
 
-$active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 if (woocommerce_debi_is_woocommerce_active()) {
 	add_filter('woocommerce_payment_gateways', 'add_woocommerce_debi');
 	function add_woocommerce_debi($gateways) {

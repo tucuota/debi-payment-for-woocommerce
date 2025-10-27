@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2025-10-27
 
 ### Security
+- All user-facing text converted to translatable strings
+- Improved output escaping in payment fields
+- Updated order meta keys to follow WordPress conventions
 - Added proper input sanitization and validation in `process_payment()` method
 - Added security headers (`WPINC` checks) to all PHP files
 - Fixed direct `$_POST` access without sanitization
@@ -20,15 +23,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced payment field rendering with proper escaping
 - Updated WooCommerce tested version to 8.0
 - Improved plugin structure for WordPress.org submission
+- Converted all Spanish hardcoded text to translatable English strings
+- Updated all code comments to English
+- Replaced Spanish order meta keys with English equivalents
+- Payment field labels now fully translatable
 
 ### Added
 - Created `uninstall.php` for proper plugin cleanup
 - Created comprehensive `README.txt` for WordPress.org
 - Added `.gitignore` file
-- Created `languages/` directory for translations
+- Created `languages/woocommerce-debi.pot` translation template
 - Created `assets/` directory for plugin icon and banners
 - Added proper security checks to `debi.php` API client
 - Added class existence checks to prevent double-loading
+- Full i18n support with translatable strings
 
 ### Fixed
 - Fixed duplicate PHP opening tag in main plugin file

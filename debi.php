@@ -79,18 +79,18 @@ class debi {
 	 **/
 	public function request($uri, $data = []) {
 		try {
-			// Construir URL completa
+			// Build complete URL
 			$base_url = $this->sandbox ? 'https://api.debi-test.pro/v1/' : 'https://api.debi.pro/v1/';
 			$url = $base_url . $uri;
 			
-			// Preparar headers
+			// Prepare headers
 			$headers = [
 				"Authorization" => "Bearer $this->token",
 				"Api-Version" => "$this->version",
 				'Content-Type' => 'application/json',
 			];
 			
-			// Preparar el array de args para wp_remote_request
+			// Prepare arguments array for wp_remote_request
 			$args = [
 				'method' => $data['method'] ?? 'GET',
 				'headers' => $headers,

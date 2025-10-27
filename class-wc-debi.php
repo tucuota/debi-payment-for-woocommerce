@@ -38,7 +38,7 @@ class WC_debi extends WC_Payment_Gateway
     public function __construct()
     {
         $this->id = 'woo-debi';
-        $this->method_title = __('Debi', 'debi-payment-for-woocommerce');
+        $this->method_title = __('Debi Payment', 'debi-payment-for-woocommerce');
         $this->title = __('Debi Payment', 'debi-payment-for-woocommerce');
         $this->has_fields = true;
         $this->init_form_fields();

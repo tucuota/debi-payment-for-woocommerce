@@ -340,7 +340,8 @@ class WC_debi extends WC_Payment_Gateway
                         // Render installment options
                         for ($i = 0; $i <= 12; $i++) {
                             $property = 'interest_quota_' . $i;
-                            if (!empty($this->$property)) {
+                            // Check if property exists and is not empty string (but allow 0)
+                            if (isset($this->$property) && $this->$property !== '') {
                                 $final_amount = number_format($amount + $amount * $this->{$property} / 100, 2, ',', ' ');
                                 $final_quota = number_format($amount / ($i == 0 ? 1 : $i) + $amount * $this->{$property} / ($i == 0 ? 1 : $i) / 100, 2, ',', ' ');
                                 
@@ -356,7 +357,7 @@ class WC_debi extends WC_Payment_Gateway
                         $has_any_interest = false;
                         for ($i = 0; $i <= 12; $i++) {
                             $property = 'interest_quota_' . $i;
-                            if (!empty($this->$property)) {
+                            if (isset($this->$property) && $this->$property !== '') {
                                 $has_any_interest = true;
                                 break;
                             }

@@ -47,10 +47,9 @@ if (woocommerce_debi_is_woocommerce_active()) {
 
 	add_action('plugins_loaded', 'init_woocommerce_debi');
 	function init_woocommerce_debi() {
+		load_plugin_textdomain('debi-payment-gateway-for-woocommerce', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 		require_once plugin_dir_path(__FILE__) . 'class-wc-debi.php';
 	}
-
-	// Translations are automatically loaded from the languages directory
 
 }
 

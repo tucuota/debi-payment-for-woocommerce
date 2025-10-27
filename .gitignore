@@ -29,9 +29,12 @@ Thumbs.db
 *.swo
 *~
 
-# Languages (compiled files will be generated)
-languages/*.mo
-languages/*.pot
+# Languages 
+# Note: .mo files are needed and should be included in the repository
+# .po files are source files for translators
+
+# Only ignore generated .mo files that would be created in production
+# Keep the .mo files created by developers in the repo
 
 # Exclude but keep directory
 !.gitkeep

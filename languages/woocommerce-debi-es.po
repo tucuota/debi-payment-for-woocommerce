@@ -1,0 +1,123 @@
+# Translation file for WooCommerce Debi
+# Copyright (C) 2024 WooCommerce Debi Plugin
+# This file is distributed under the same license as the WooCommerce Debi plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Debi 1.1.0\n"
+"Report-Msgid-Bugs-To: https://debi.pro\n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+#: class-wc-debi.php:41
+msgid "Debi Payment Gateway"
+msgstr "Pasarela de pago Debi"
+
+#: class-wc-debi.php:42
+msgid "Debi Payment"
+msgstr "Pago Debi"
+
+#: class-wc-debi.php:72
+msgid "Enable/Disable"
+msgstr "Activar/Desactivar"
+
+#: class-wc-debi.php:74
+msgid "Enable Custom Payment"
+msgstr "Activar método de pago personalizado"
+
+#: class-wc-debi.php:78
+msgid "Method Title"
+msgstr "Título del método"
+
+#: class-wc-debi.php:80
+msgid "This controls the title"
+msgstr "Controla el título"
+
+#: class-wc-debi.php:81
+msgid "Credit or debit card in installments"
+msgstr "Tarjeta de crédito o débito en cuotas"
+
+#: class-wc-debi.php:85
+msgid "Sanbox mode"
+msgstr "Modo de pruebas (Sandbox)"
+
+#: class-wc-debi.php:87
+msgid "Sandbox"
+msgstr "Pruebas"
+
+#: class-wc-debi.php:89
+msgid "Check if you want to use sandbox mode for testing"
+msgstr "Activa para usar el modo de pruebas"
+
+#: class-wc-debi.php:92
+msgid "Token Debi Live"
+msgstr "Token Debi Live (Producción)"
+
+#: class-wc-debi.php:96
+msgid "Generate token in developer section of debi"
+msgstr "Genera el token en la sección de desarrollador de debi"
+
+#: class-wc-debi.php:100
+msgid "Token Debi Sandbox"
+msgstr "Token Debi Sandbox (Pruebas)"
+
+#: class-wc-debi.php:104
+msgid "Generate token in developer section of debi-test.pro"
+msgstr "Genera el token en la sección de desarrollador de debi-test.pro"
+
+#: class-wc-debi.php:109
+msgid "% interest for payment in two business days with debit"
+msgstr "% de interés para pago en dos días hábiles con débito"
+
+#: class-wc-debi.php:121
+msgid "% interest for %d installment"
+msgid_plural "% interest for %d installments"
+msgstr[0] "% de interés para %d cuota"
+msgstr[1] "% de interés para %d cuotas"
+
+#: class-wc-debi.php:281
+msgid "Order not found."
+msgstr "Orden no encontrada."
+
+#: class-wc-debi.php:303
+msgid "Invalid number of installments selected."
+msgstr "Número de cuotas inválido."
+
+#: class-wc-debi.php:317
+msgid "Card number is required."
+msgstr "El número de tarjeta es requerido."
+
+#: class-wc-debi.php:322
+msgid "Invalid card number."
+msgstr "Número de tarjeta inválido."
+
+#: class-wc-debi.php:470 class-wc-debi.php:472
+msgid "Select number of installments"
+msgstr "Seleccione la cantidad de cuotas"
+
+#: class-wc-debi.php:411
+msgid "%d installment of $ %s ($ %s)"
+msgstr "%d cuota de $ %s ($ %s)"
+
+#: class-wc-debi.php:412
+msgid "%d installments of $ %s ($ %s)"
+msgstr "%d cuotas de $ %s ($ %s)"
+
+#: class-wc-debi.php:433
+msgid "%d installment of $ %s (no interest)"
+msgstr "%d cuota de $ %s (sin interés)"
+
+#: class-wc-debi.php:434
+msgid "%d installments of $ %s (no interest)"
+msgstr "%d cuotas de $ %s (sin interés)"
+
+#: class-wc-debi.php:519
+msgid "Enter your card number"
+msgstr "Ingrese su número de tarjeta"
+
+#: class-wc-debi.php:441
+msgid "DEBIT CARD ONLY"
+msgstr "SOLO CON TARJETA DE DÉBITO"
+

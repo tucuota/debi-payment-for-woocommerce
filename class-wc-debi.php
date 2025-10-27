@@ -118,7 +118,7 @@ class WC_debi extends WC_Payment_Gateway
             ),
 
             'interest_quota_1' => array(
-                'title' => __('% interest for 1 installment', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 1, 'woocommerce-debi'), 1),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -127,7 +127,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_2' => array(
-                'title' => __('% interest for 2 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 2, 'woocommerce-debi'), 2),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -136,7 +136,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_3' => array(
-                'title' => __('% interest for 3 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 3, 'woocommerce-debi'), 3),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -145,7 +145,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_4' => array(
-                'title' => __('% interest for 4 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 4, 'woocommerce-debi'), 4),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -154,7 +154,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_5' => array(
-                'title' => __('% interest for 5 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 5, 'woocommerce-debi'), 5),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -163,7 +163,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_6' => array(
-                'title' => __('% interest for 6 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 6, 'woocommerce-debi'), 6),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -172,7 +172,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_7' => array(
-                'title' => __('% interest for 7 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 7, 'woocommerce-debi'), 7),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -181,7 +181,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_8' => array(
-                'title' => __('% interest for 8 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 8, 'woocommerce-debi'), 8),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -190,7 +190,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_9' => array(
-                'title' => __('% interest for 9 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 9, 'woocommerce-debi'), 9),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -199,7 +199,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_10' => array(
-                'title' => __('% interest for 10 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 10, 'woocommerce-debi'), 10),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -208,7 +208,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_11' => array(
-                'title' => __('% interest for 11 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 11, 'woocommerce-debi'), 11),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -217,7 +217,7 @@ class WC_debi extends WC_Payment_Gateway
                     'max' => '100',
                 ),
             ), 'interest_quota_12' => array(
-                'title' => __('% interest for 12 installments', 'woocommerce-debi'),
+                'title' => sprintf(_n('%% interest for %d installment', '%% interest for %d installments', 12, 'woocommerce-debi'), 12),
                 'type' => 'number',
                 'default' => '',
                 'custom_attributes' => array(
@@ -370,11 +370,49 @@ class WC_debi extends WC_Payment_Gateway
         }
     }
 
+    /**
+     * Get formatted installment text
+     *
+     * @param int $count Number of installments
+     * @param string $quota_amount Formatted quota amount
+     * @param string $final_amount Formatted final amount
+     * @param string $extra_text Additional text to append (e.g., "- DEBIT CARD ONLY")
+     * @return string Formatted installment text
+     */
+    private function get_installment_text($count, $quota_amount, $final_amount, $extra_text = '') {
+        $singular_text = __('%d installment of $ %s ($ %s)', 'woocommerce-debi');
+        $plural_text = __('%d installments of $ %s ($ %s)', 'woocommerce-debi');
+        
+        $text = ($count == 1) ? $singular_text : $plural_text;
+        
+        $formatted = sprintf($text, $count, $quota_amount, $final_amount);
+        
+        if (!empty($extra_text)) {
+            $formatted .= $extra_text;
+        }
+        
+        return $formatted;
+    }
+
+    /**
+     * Get formatted installment text for no interest options
+     *
+     * @param int $count Number of installments
+     * @param string $quota_amount Formatted quota amount
+     * @return string Formatted installment text
+     */
+    private function get_installment_no_interest_text($count, $quota_amount) {
+        $singular_text = __('%d installment of $ %s (no interest)', 'woocommerce-debi');
+        $plural_text = __('%d installments of $ %s (no interest)', 'woocommerce-debi');
+        
+        $text = ($count == 1) ? $singular_text : $plural_text;
+        
+        return sprintf($text, $count, $quota_amount);
+    }
+
     public function payment_fields()
     {
             global $woocommerce;
-            // $amount = $woocommerce->cart->get_total(); aparece con signo ARS
-            // $amount = $woocommerce->cart->cart_contents_total; anda pero rara función
             $amount = $woocommerce->cart->total;
 
             $items = $woocommerce->cart->get_cart();
@@ -393,96 +431,20 @@ class WC_debi extends WC_Payment_Gateway
                     <select id="<?php echo esc_attr($this->id); ?>-cuotas" name="<?php echo esc_attr($this->id); ?>-cuotas">
                         <option value="" disabled selected><?php _e('Select number of installments', 'woocommerce-debi'); ?></option>
                         <?php
-                        if ($this->interest_quota_0 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_0 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 1 + $amount * $this->interest_quota_0 / 1 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="0"><?php echo esc_html(sprintf(__('1 installment of $ %s ($ %s) - DEBIT CARD ONLY', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_1 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_1 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 1 + $amount * $this->interest_quota_1 / 1 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="1"><?php echo esc_html(sprintf(__('1 installment of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_2 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_2 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 2 + $amount * $this->interest_quota_2 / 2 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="2"><?php echo esc_html(sprintf(__('2 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_3 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_3 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 3 + $amount * $this->interest_quota_3 / 3 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="3"><?php echo esc_html(sprintf(__('3 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_4 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_4 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 4 + $amount * $this->interest_quota_4 / 4 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="4"><?php echo esc_html(sprintf(__('4 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_5 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_5 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 5 + $amount * $this->interest_quota_5 / 5 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="5"><?php echo esc_html(sprintf(__('5 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_6 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_6 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 6 + $amount * $this->interest_quota_6 / 6 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="6"><?php echo esc_html(sprintf(__('6 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_7 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_7 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 7 + $amount * $this->interest_quota_7 / 7 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="7"><?php echo esc_html(sprintf(__('7 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_8 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_8 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 8 + $amount * $this->interest_quota_8 / 8 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="8"><?php echo esc_html(sprintf(__('8 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_9 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_9 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 9 + $amount * $this->interest_quota_9 / 9 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="9"><?php echo esc_html(sprintf(__('9 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_10 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_10 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 10 + $amount * $this->interest_quota_10 / 10 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="10"><?php echo esc_html(sprintf(__('10 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_11 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_11 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 11 + $amount * $this->interest_quota_11 / 11 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="11"><?php echo esc_html(sprintf(__('11 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
-
-                        if ($this->interest_quota_12 != "") {
-                            $final_amount = number_format($amount + $amount * $this->interest_quota_12 / 100, 2, ',', ' ');
-                            $final_quota = number_format($amount / 12 + $amount * $this->interest_quota_12 / 12 / 100, 2, ',', ' ')
-                        ?>
-                            <option value="12"><?php echo esc_html(sprintf(__('12 installments of $ %s ($ %s)', 'woocommerce-debi'), $final_quota, $final_amount)); ?></option>
-                        <?php }
+                        // Render installment options
+                        for ($i = 0; $i <= 12; $i++) {
+                            $property = 'interest_quota_' . $i;
+                            if (!empty($this->$property)) {
+                                $final_amount = number_format($amount + $amount * $this->{$property} / 100, 2, ',', ' ');
+                                $final_quota = number_format($amount / ($i == 0 ? 1 : $i) + $amount * $this->{$property} / ($i == 0 ? 1 : $i) / 100, 2, ',', ' ');
+                                
+                                $extra_text = ($i == 0) ? ' ' . __('DEBIT CARD ONLY', 'woocommerce-debi') : '';
+                                $text = $this->get_installment_text($i == 0 ? 1 : $i, $final_quota, $final_amount, $extra_text);
+                                ?>
+                                <option value="<?php echo esc_attr($i); ?>"><?php echo esc_html($text); ?></option>
+                                <?php
+                            }
+                        }
 
                         // Default options if no interest values are configured
                         $has_any_interest = false;
@@ -494,11 +456,11 @@ class WC_debi extends WC_Payment_Gateway
                             }
                         }
 
-                        if (!$has_any_interest) {                    
+                        if (!$has_any_interest) {
                             ?>
-                            <option value="1"><?php echo esc_html(sprintf(__('1 installment of $ %s (no interest)', 'woocommerce-debi'), number_format($amount, 2, ',', ' '))); ?></option>
-                            <option value="2"><?php echo esc_html(sprintf(__('2 installments of $ %s (no interest)', 'woocommerce-debi'), number_format($amount / 2, 2, ',', ' '))); ?></option>
-                            <option value="3"><?php echo esc_html(sprintf(__('3 installments of $ %s (no interest)', 'woocommerce-debi'), number_format($amount / 3, 2, ',', ' '))); ?></option>
+                            <option value="1"><?php echo esc_html($this->get_installment_no_interest_text(1, number_format($amount, 2, ',', ' '))); ?></option>
+                            <option value="2"><?php echo esc_html($this->get_installment_no_interest_text(2, number_format($amount / 2, 2, ',', ' '))); ?></option>
+                            <option value="3"><?php echo esc_html($this->get_installment_no_interest_text(3, number_format($amount / 3, 2, ',', ' '))); ?></option>
                             <?php
                         }
                         ?>

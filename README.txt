@@ -72,9 +72,17 @@ Debi Payment for WooCommerce is the official payment gateway integration for Deb
 
 = Getting Your API Credentials =
 
-1. Sign up at https://debi.pro
-2. Navigate to the Developer section
-3. Generate your API tokens for both live and sandbox environments
+Production:
+1. Sign up at https://debi.pro/register for production
+2. Navigate to the Developer section https://debi.pro/dashboard/developers
+3. Copy your API token (secret key) and paste it in the plugin settings
+4. Save changes
+
+Sandbox:
+1. Sign up at https://debi-test.pro/register for sandbox
+2. Navigate to the Developer section https://debi-test.pro/dashboard/developers
+3. Copy your API token (secret key) and paste it in the plugin settings
+4. Save changes
 
 == Frequently Asked Questions ==
 
@@ -140,7 +148,7 @@ Initial release.
 == Support ==
 
 For support, please visit:
-https://debi.pro/support
+https://debi.pro/docs
 
 == Credits ==
 

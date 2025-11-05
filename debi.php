@@ -16,7 +16,7 @@ if (!defined('WPINC')) {
  *
  * @package    WooCommerce_Debi
  */
-class debiException extends \Exception {
+class DEBIPRO_debiException extends \Exception {
 
 }
 
@@ -27,7 +27,7 @@ class debiException extends \Exception {
  *
  * @package    WooCommerce_Debi
  */
-class debi {
+class DEBIPRO_debi {
 	/**
 	 * API token for authentication
 	 *
@@ -68,7 +68,7 @@ class debi {
 	 * @param string $uri  API endpoint
 	 * @param array  $data Request data including method and body
 	 * @return array Decoded JSON response
-	 * @throws debiException If the request fails
+	 * @throws DEBIPRO_debiException If the request fails
 	 **/
 	public function request($uri, $data = []) {
 		try {
@@ -96,7 +96,7 @@ class debi {
 			
 			// Check if the request was successful
 			if (is_wp_error($response)) {
-				throw new debiException($response->get_error_message(), 0);
+				throw new DEBIPRO_debiException($response->get_error_message(), 0);
 			}
 			
 			// Get response code
@@ -106,7 +106,7 @@ class debi {
 			if ($response_code < 200 || $response_code >= 300) {
 				$error_message = wp_remote_retrieve_response_message($response);
 				$body = wp_remote_retrieve_body($response);
-				throw new debiException($error_message . ' - ' . $body, $response_code);
+				throw new DEBIPRO_debiException($error_message . ' - ' . $body, $response_code);
 			}
 			
 			// Get response body
@@ -117,19 +117,19 @@ class debi {
 			
 			// Check if JSON decoding was successful
 			if (json_last_error() !== JSON_ERROR_NONE) {
-				throw new debiException('Invalid JSON response from API', $response_code);
+				throw new DEBIPRO_debiException('Invalid JSON response from API', $response_code);
 			}
 			
 			return $decoded_response;
 
-		} catch (debiException $e) {
+		} catch (DEBIPRO_debiException $e) {
 			// Re-throw our custom exceptions
 			throw $e;
 		} catch (Exception $e) {
 			// Handle any other exceptions
 			$raw_message = $e->getMessage();
 			$error_message = is_string($raw_message) ? sanitize_text_field($raw_message) : '';
-			throw new debiException($error_message, 0);
+			throw new DEBIPRO_debiException($error_message, 0);
 		}
 	}
 

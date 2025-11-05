@@ -24,6 +24,7 @@
  * Domain Path:       /languages/
  * Requires at least: 5.6
  * Requires PHP:      7.0
+ * Requires Plugins:  woocommerce
  * WC requires at least: 3.0
  * WC tested up to:   9.1
  */
@@ -34,13 +35,13 @@ if (!defined('WPINC')) {
 }
 
 // Load API client class
-if (!class_exists('debi')) {
+if (!class_exists('DEBIPRO_debi')) {
 	require_once plugin_dir_path(__FILE__) . 'debi.php';
 }
 
 // Map es_AR to es_ES for translations
-add_filter('plugin_locale', 'debi_map_locale', 10, 2);
-function debi_map_locale($locale, $domain) {
+add_filter('plugin_locale', 'debipro_map_locale', 10, 2);
+function debipro_map_locale($locale, $domain) {
 	if ($domain === 'debi-payment-for-woocommerce' && $locale === 'es_AR') {
 		return 'es_ES';
 	}
@@ -48,22 +49,22 @@ function debi_map_locale($locale, $domain) {
 }
 
 // Load translations early
-add_action('plugins_loaded', 'debi_load_textdomain', 5);
-function debi_load_textdomain() {
+add_action('plugins_loaded', 'debipro_load_textdomain', 5);
+function debipro_load_textdomain() {
 	$locale = apply_filters('plugin_locale', get_locale(), 'debi-payment-for-woocommerce');
 	$mofile = plugin_dir_path(__FILE__) . 'languages/debi-payment-for-woocommerce-' . $locale . '.mo';
 	load_textdomain('debi-payment-for-woocommerce', $mofile);
 }
 
-if (woocommerce_debi_is_woocommerce_active()) {
-	add_filter('woocommerce_payment_gateways', 'add_woocommerce_debi');
-	function add_woocommerce_debi($gateways) {
-		$gateways[] = 'WC_debi';
+if (debipro_is_woocommerce_active()) {
+	add_filter('woocommerce_payment_gateways', 'debipro_add_payment_gateway');
+	function debipro_add_payment_gateway($gateways) {
+		$gateways[] = 'DEBIPRO_Payment_Gateway';
 		return $gateways;
 	}
 
-	add_action('plugins_loaded', 'init_woocommerce_debi', 10);
-	function init_woocommerce_debi() {
+	add_action('plugins_loaded', 'debipro_init_payment_gateway', 10);
+	function debipro_init_payment_gateway() {
 		require_once plugin_dir_path(__FILE__) . 'class-wc-debi.php';
 	}
 
@@ -72,7 +73,7 @@ if (woocommerce_debi_is_woocommerce_active()) {
 /**
  * @return bool
  */
-function woocommerce_debi_is_woocommerce_active() {
+function debipro_is_woocommerce_active() {
 	$active_plugins = (array) get_option('active_plugins', array());
 
 	if (is_multisite()) {

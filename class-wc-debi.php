@@ -12,11 +12,11 @@ if (!defined('WPINC')) {
 }
 
 /**
- * WC_debi Payment Gateway
+ * DEBIPRO_Payment_Gateway Payment Gateway
  *
  * @package    WooCommerce_Debi
  */
-class WC_debi extends WC_Payment_Gateway
+class DEBIPRO_Payment_Gateway extends WC_Payment_Gateway
 {
     private $sandbox_mode;
     private $token_debi_live;
@@ -37,7 +37,7 @@ class WC_debi extends WC_Payment_Gateway
 
     public function __construct()
     {
-        $this->id = 'woo-debi';
+        $this->id = 'debipro';
         $this->method_title = __('Debi Payment', 'debi-payment-for-woocommerce');
         $this->title = __('Debi Payment', 'debi-payment-for-woocommerce');
         $this->has_fields = true;
@@ -190,10 +190,10 @@ class WC_debi extends WC_Payment_Gateway
             return false;
         }
 
-        update_post_meta($order_id, '_debi_final_price', sanitize_text_field($final_price));
-        update_post_meta($order_id, '_debi_installment_count', sanitize_text_field($quotas));
-        update_post_meta($order_id, '_debi_installment_amount', sanitize_text_field($final_price / $quotas));
-        update_post_meta($order_id, '_debi_card_last_four', sanitize_text_field(substr($number, -4)));
+        update_post_meta($order_id, '_debipro_final_price', sanitize_text_field($final_price));
+        update_post_meta($order_id, '_debipro_installment_count', sanitize_text_field($quotas));
+        update_post_meta($order_id, '_debipro_installment_amount', sanitize_text_field($final_price / $quotas));
+        update_post_meta($order_id, '_debipro_card_last_four', sanitize_text_field(substr($number, -4)));
 
         if (gmdate('j') >= 29) {
             $day_of_month = 1;
@@ -203,7 +203,7 @@ class WC_debi extends WC_Payment_Gateway
 
 
         // Save customer to Debi
-        $response_customer = (new debi($token, $is_sandbox))->request('customers', [
+        $response_customer = (new DEBIPRO_debi($token, $is_sandbox))->request('customers', [
             'method' => 'POST',
             'body' => [
                 'name' => $name,
@@ -217,7 +217,7 @@ class WC_debi extends WC_Payment_Gateway
 
 
         // Tokenize payment method
-        $response_payment_method = (new debi($token, $is_sandbox))->request('payment_methods', [
+        $response_payment_method = (new DEBIPRO_debi($token, $is_sandbox))->request('payment_methods', [
             'method' => 'POST',
             'body' => [
                 'type' => 'card',
@@ -230,7 +230,7 @@ class WC_debi extends WC_Payment_Gateway
         $data_payment_method = $response_payment_method['data'];
         $payment_method_id = $data_payment_method['id'];
 
-        $request = (new debi($token, $is_sandbox))->request('subscriptions', [
+        $request = (new DEBIPRO_debi($token, $is_sandbox))->request('subscriptions', [
             'method' => 'POST',
             'body' => [
                 'amount' => $final_price / $quotas,
@@ -256,7 +256,7 @@ class WC_debi extends WC_Payment_Gateway
         } else {
 
             if (!empty($subscription_id)) {
-                update_post_meta($order_id, '_debi_subscription_id', sanitize_text_field($subscription_id));
+                update_post_meta($order_id, '_debipro_subscription_id', sanitize_text_field($subscription_id));
             }
 
             // This also reduces stock (if cancelled later, it automatically increases)

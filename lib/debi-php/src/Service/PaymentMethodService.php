@@ -76,7 +76,7 @@ final class PaymentMethodService extends AbstractService
             basePath: self::BASE,
             id: $id,
             subPath: 'attach',
-            params: ['customer_id' => $customerId],
+            params: ['customer' => $customerId],
             opts: $opts,
         );
     }

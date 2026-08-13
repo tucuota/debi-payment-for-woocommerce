@@ -1152,6 +1152,15 @@ class DEBIPRO_Payment_Gateway extends WC_Payment_Gateway
             if ( $fixed_installments !== null )
                 return $fixed_installments;
 
+<<<<<<< Updated upstream
+=======
+            if ( $requested === null ) {
+                throw new \Exception(
+                    esc_html__( 'Requested number of installments was not provided.', 'debi-payment-for-woocommerce' )
+                );
+            }
+
+>>>>>>> Stashed changes
             if( $max_installments !== null && $requested <= $max_installments)
                 return $requested;                
             

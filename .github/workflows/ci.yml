@@ -80,8 +80,9 @@ jobs:
         uses: WordPress/plugin-check-action@v1
         with:
           build-dir: "/tmp/plugin-check/debi-payment-for-woocommerce"
-          # escaped_output fires false positives on throw statements in lib/debi-php/ (a
-          # vendored SDK that ships without WP coding-standards annotations) and on
-          # wp_send_json_error() calls (JSON output, not HTML). Real escaping issues in
-          # the plugin's own template code are caught by the PHPCS lint job above.
-          exclude-checks: 'escaped_output'
+          # lib/debi-php/ is the vendored Debi SDK, kept byte-identical to its source
+          # repository so updating it stays a plain copy. Its exception messages and
+          # diagnostics are not WordPress output, but they trip the escaping sniffs,
+          # so skip the directory here exactly as phpcs.xml.dist already does.
+          # The plugin's own code is still fully checked.
+          exclude-directories: 'lib'
